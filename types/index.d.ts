@@ -7,8 +7,8 @@ type paramsType = {
 
 // types to create new user
 type createUserTypes = {
-  fullName: string;
-  phoneNumber: string;
+  name: string;
+  phone: string;
   email: string;
 };
 

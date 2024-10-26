@@ -20,24 +20,24 @@ export const Login = () => {
   const form = useForm<z.infer<typeof RegistrationFromSchema>>({
     resolver: zodResolver(RegistrationFromSchema),
     defaultValues: {
-      fullName: "",
+      name: "",
       email: "",
-      phoneNumber: "",
+      phone: "",
     },
   });
 
   async function onSubmit({
-    fullName,
+    name,
     email,
-    phoneNumber,
+    phone,
   }: z.infer<typeof RegistrationFromSchema>) {
     // transform user email to lowerCase
     const userEmail = email.toLowerCase();
 
     const userData = {
-      fullName,
+      name,
       email: userEmail,
-      phoneNumber,
+      phone,
     };
     setIsLoading(true);
     // Create new user
@@ -58,7 +58,7 @@ export const Login = () => {
         className="flex flex-col gap-[15px] mt-[30px]"
       >
         <CustomField
-          name="fullName"
+          name="name"
           label="Full name"
           formControl={form.control}
           placeHolder="John Doe"
@@ -76,7 +76,7 @@ export const Login = () => {
         />
 
         <CustomField
-          name="phoneNumber"
+          name="phone"
           label="Phone Number"
           formControl={form.control}
           placeHolder="08101330834"

@@ -18,7 +18,7 @@ const ImageDropBox = ({ files, onChange }: FileUploaderProps) => {
   return (
     <div
       {...getRootProps()}
-      className="border-dashed border-2 border-dark-500 bg-dark-400 rounded-[5px] flex items-center justify-center h-[200px] flex-col gap-3"
+      className="border-dashed border-2 border-dark-500 bg-dark-400 rounded-[5px] flex items-center justify-center h-[200px] max-[500px]:h-[150px] flex-col gap-3"
     >
       <input {...getInputProps()} />
       {files && files?.length > 0 ? (
