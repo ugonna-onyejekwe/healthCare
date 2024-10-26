@@ -8,6 +8,10 @@
     @apply rounded-[5px] h-[53px] bg-dark-400 px-[18px] border border-dark-500 py-[8px] flex items-center gap-[5px] placeholder:text-dark-600   !important;
   }
 
+  .input-field {
+    @apply border border-dark-500 bg-dark-400 rounded-[5px];
+  }
+
   /* .input-phone {
     @apply mt-2 h-11 rounded-md px-3 text-sm border bg-dark-400 placeholder:text-dark-600 border-dark-500 !important;
   } */
