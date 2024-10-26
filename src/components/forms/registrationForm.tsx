@@ -9,10 +9,11 @@ import {
   FormFieldType,
   GenderOptions,
   IdentificationTypes,
+  PatientFormDefaultValues,
 } from "@/lib/constants";
 import { SubmitButton } from "../submitButton";
 import { z } from "zod";
-import { RegistrationFromSchema } from "@/lib/schemas";
+import { PatientFormValidation } from "@/lib/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
@@ -21,42 +22,55 @@ import { Label } from "../ui/label";
 import { SelectItem } from "../ui/select";
 import Image from "next/image";
 import ImageDropBox from "../ImageDropBox";
+import { registerPatient } from "@/lib/actions/patient.actions";
 
-const RegistrationForm = () => {
+const RegistrationForm = ({ user }: { user: User }) => {
   const Router = useRouter();
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  const form = useForm<z.infer<typeof RegistrationFromSchema>>({
-    resolver: zodResolver(RegistrationFromSchema),
+  const form = useForm<z.infer<typeof PatientFormValidation>>({
+    resolver: zodResolver(PatientFormValidation),
     defaultValues: {
-      fullName: "",
-      email: "",
-      phoneNumber: "",
+      ...PatientFormDefaultValues,
+      name: user.name,
+      email: user.email,
+      phone: user.phone,
     },
   });
 
-  async function onSubmit({
-    fullName,
-    email,
-    phoneNumber,
-  }: z.infer<typeof RegistrationFromSchema>) {
-    //   // transform user email to lowerCase
-    //   const userEmail = email.toLowerCase();
+  async function onSubmit(values: z.infer<typeof PatientFormValidation>) {
+    setIsLoading(true);
+    // Store file info in form data as
+    let formData;
+    if (
+      values.identificationDocument &&
+      values.identificationDocument?.length > 0
+    ) {
+      const blobFile = new Blob([values.identificationDocument[0]], {
+        type: values.identificationDocument[0].type,
+      });
 
-    //   const userData = {
-    //     fullName,
-    //     email: userEmail,
-    //     phoneNumber,
-    //   };
-    //   setIsLoading(true);
-    //   // Create new user
-    //   try {
-    //     const user = await createUser(userData);
+      formData = new FormData();
+      formData.append("blobFile", blobFile);
+      formData.append("fileName", values.identificationDocument[0].name);
+    }
+    try {
+      const paientsData = {
+        ...values,
+        userId: user.$id,
+        birthDate: new Date(values.birthDate),
+        identificationDocument: formData,
+      };
 
-    //     if (user) Router.push(`/patient/${user.$id}/register`);
-    //   } catch (error) {
-    //     console.log(error);
-    //   }
+      // @ts-ignore
+      const newPatient = await registerPatient(paientsData);
+
+      if (newPatient) {
+        Router.push(`/patient/${user.$id}/new-appointment`);
+      }
+    } catch (error) {
+      console.log(error);
+    }
     setIsLoading(false);
   }
 
@@ -73,7 +87,7 @@ const RegistrationForm = () => {
           </h3>
           <div className="flex flex-col gap-[18px]">
             <CustomField
-              name="fullName"
+              name="name"
               label="Full name"
               formControl={form.control}
               placeHolder="John Doe"
@@ -93,7 +107,7 @@ const RegistrationForm = () => {
               />
 
               <CustomField
-                name="phoneNumber"
+                name="phone"
                 label="Phone Number"
                 formControl={form.control}
                 placeHolder="08101330834"
@@ -164,15 +178,15 @@ const RegistrationForm = () => {
             {/* col 4 */}
             <div className="flex items-center gap-[20px] justify-between max-[900px]:flex-col">
               <CustomField
-                name="Emergency contact name"
-                label="EmergencyContactName"
+                name="emergencyContactName"
+                label="Emergency contact name"
                 formControl={form.control}
                 placeHolder="Guardian's name"
                 fieldType={FormFieldType.INPUT}
               />
 
               <CustomField
-                name="EmergencyContactNumber"
+                name="emergencyContactNumber"
                 label="Emergency contact name"
                 formControl={form.control}
                 placeHolder="08101330834"
@@ -188,7 +202,7 @@ const RegistrationForm = () => {
 
           <div className="flex flex-col gap-[18px]">
             <CustomField
-              name="primaryCarePhysician"
+              name="primaryPhysician"
               label="Primary care physician"
               formControl={form.control}
               fieldType={FormFieldType.SELECT}
@@ -318,19 +332,19 @@ const RegistrationForm = () => {
 
           <div className="flex flex-col gap-[18px]">
             <CustomField
-              name="consentTreatment"
+              name="treatmentConsent"
               label="I consent to receive treatment for my health condition."
               formControl={form.control}
               fieldType={FormFieldType.CHECKBOX}
             />
             <CustomField
-              name="disclosure"
+              name="disclosureConsent"
               label="I consent to the use and disclosure of my health information for treatment purposes."
               formControl={form.control}
               fieldType={FormFieldType.CHECKBOX}
             />
             <CustomField
-              name="privacyAndPolicy"
+              name="privacyConsent"
               label="I acknowledge that I have reviewed and agree to the privacy policy"
               formControl={form.control}
               fieldType={FormFieldType.CHECKBOX}
