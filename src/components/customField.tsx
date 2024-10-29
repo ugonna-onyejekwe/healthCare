@@ -74,6 +74,7 @@ const RenderInput = ({
         <Textarea
           placeholder={props.placeHolder}
           className="input-field min-h-[120px]"
+          {...field}
         />
       );
 

@@ -22,13 +22,15 @@ const ImageDropBox = ({ files, onChange }: FileUploaderProps) => {
     >
       <input {...getInputProps()} />
       {files && files?.length > 0 ? (
-        <Image
-          src={convertFileToUrl(files[0])}
-          width={1000}
-          height={1000}
-          alt="uploaded image"
-          className="max-h-[400px] overflow-hidden object-cover"
-        />
+        <div className="p-[10px] size-full flex items-center justify-center">
+          <Image
+            src={convertFileToUrl(files[0])}
+            width={1000}
+            height={1000}
+            alt="uploaded image"
+            className="h-full w-fit overflow-hidden "
+          />
+        </div>
       ) : (
         <>
           <Image
