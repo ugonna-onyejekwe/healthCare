@@ -95,7 +95,7 @@ const AppiontmentForm = ({
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="flex flex-col gap-[15px] mt-[40px]"
+        className="flex flex-col gap-[15px] "
       >
         <CustomField
           name="primaryPhysician"

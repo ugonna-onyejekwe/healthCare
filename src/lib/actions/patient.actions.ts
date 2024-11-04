@@ -17,6 +17,8 @@ import { parseStringify } from "../utils";
 // Create user
 export const createUser = async ({ email, phone, name }: createUserTypes) => {
   try {
+    console.log("amhere");
+
     const newUser = await users.create(
       ID.unique(),
       email,
@@ -24,15 +26,21 @@ export const createUser = async ({ email, phone, name }: createUserTypes) => {
       undefined,
       name
     );
-
+    console.log("am here 2");
+    console.log(newUser, "new user");
     return parseStringify(newUser);
   } catch (error: any) {
+    console.log("am here 3");
     if (error && error?.code === 409) {
-      const existingUser = await users.list([Query.equal("email", [email])]);
+      let existingUser = await users.list([Query.equal("email", [email])]);
+
+      if (existingUser.users.length === 0) {
+        existingUser = await users.list([Query.equal("phone", [phone])]);
+      }
 
       return existingUser.users[0];
     }
-    console.error("An error occurred while creating a new user:", error);
+    console.log("An error occurred while creating a new user:", error);
   }
 };
 
