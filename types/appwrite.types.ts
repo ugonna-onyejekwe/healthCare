@@ -1,12 +1,12 @@
 import { Models } from "node-appwrite";
 
-declare interface User extends createUserTypes {
+export declare interface User extends createUserTypes {
   $id: string;
 }
 
-declare type Gender = "Male" | "Female" | "Other";
+export declare type Gender = "Male" | "Female" | "Other";
 
-declare interface RegisterUserParams extends createUserTypes {
+export declare interface RegisterUserParams extends createUserTypes {
   userId: string;
   birthDate: Date;
   gender: Gender;

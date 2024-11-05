@@ -13,6 +13,7 @@ import {
   users,
 } from "../appwrite.config";
 import { parseStringify } from "../utils";
+import { RegisterUserParams } from "../../../types/appwrite.types";
 
 // Create user
 export const createUser = async ({ email, phone, name }: createUserTypes) => {
