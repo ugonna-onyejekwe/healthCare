@@ -1,3 +1,5 @@
+import { Gender } from "../../types/appwrite.types";
+
 export enum FormFieldType {
   INPUT = "input",
   TEXTAREA = "textarea",
