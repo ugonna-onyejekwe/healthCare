@@ -11,11 +11,7 @@ type StatCardProps = {
 export const StatCard = ({ count = 0, label, icon, type }: StatCardProps) => {
   return (
     <div
-      className={clsx("w-full  px-[25px] py-[30px]  rounded-md bg-dark-400", {
-        // "bg-yellow-400": type === "appointments",
-        // "bg-blue-400": type === "pending",
-        // "bg-red-500": type === "cancelled",
-      })}
+      className={clsx("w-full  px-[25px] py-[30px]  rounded-md bg-dark-400")}
     >
       <div className="flex items-center gap-4">
         <div className="flex items-center justify-center h-[40px] w-[40px] bg-dark-300 rounded-full">

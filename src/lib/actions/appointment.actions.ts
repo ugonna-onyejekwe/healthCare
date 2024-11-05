@@ -5,7 +5,6 @@ import {
   APPIONTMENT_COLLECTION_ID,
   CAREPULSE_DB_ID,
   databases,
-  messaging,
 } from "../appwrite.config";
 import { parseStringify } from "../utils";
 import { revalidatePath } from "next/cache";
@@ -93,5 +92,28 @@ export const getRecentAppointmentList = async () => {
       "An error occurred while retrieving the recent appointments:",
       error
     );
+  }
+};
+
+//  UPDATE APPOINTMENT
+export const updateAppointment = async ({
+  appointmentId,
+  appointment,
+}: UpdateAppointmentParams) => {
+  try {
+    // Update appointment to scheduled -> https://appwrite.io/docs/references/cloud/server-nodejs/databases#updateDocument
+    const updatedAppointment = await databases.updateDocument(
+      CAREPULSE_DB_ID!,
+      APPIONTMENT_COLLECTION_ID!,
+      appointmentId,
+      appointment
+    );
+
+    if (!updatedAppointment) throw Error;
+
+    revalidatePath("/admin");
+    return parseStringify(updatedAppointment);
+  } catch (error) {
+    console.error("An error occurred while scheduling an appointment:", error);
   }
 };

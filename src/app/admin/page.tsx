@@ -1,6 +1,3 @@
-import Image from "next/image";
-import Link from "next/link";
-
 import { columns } from "@/components/table/columns";
 import { DataTable } from "@/components/table/DataTable";
 import { getRecentAppointmentList } from "@/lib/actions/appointment.actions";
