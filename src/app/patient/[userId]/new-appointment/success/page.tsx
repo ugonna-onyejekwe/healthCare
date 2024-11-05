@@ -73,7 +73,7 @@ const SuccessPage = async ({ searchParams, params }: SearchParamProps) => {
 
         <div className="flex justify-center">
           <Button className="bg-green-500 mt-[20px]  text-white" asChild>
-            <Link href={`/patients/${userId}/new-appointment`}>
+            <Link href={`/patient/${userId}/new-appointment`}>
               New Appointment
             </Link>
           </Button>

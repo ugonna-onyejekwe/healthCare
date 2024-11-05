@@ -22,11 +22,13 @@ const NewAppointment = async ({ params }: SearchParamProps) => {
           Request a new appointment in 10 seconds.
         </p>
 
-        <AppiontmentForm
-          type="create"
-          userId={userId}
-          patientId={patient?.$id}
-        />
+        <div className="mt-[40px]">
+          <AppiontmentForm
+            type="create"
+            userId={userId}
+            patientId={patient?.$id}
+          />
+        </div>
 
         <p className="text-dark-600 text-[15px] text-center mt-[30px]  pb-[30px]">
           &copy;2034 carePulse
