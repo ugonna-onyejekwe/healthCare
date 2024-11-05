@@ -23,6 +23,7 @@ import { SelectItem } from "../ui/select";
 import Image from "next/image";
 import ImageDropBox from "../ImageDropBox";
 import { registerPatient } from "@/lib/actions/patient.actions";
+import { User } from "../../../types/appwrite.types";
 
 const RegistrationForm = ({ user }: { user: User }) => {
   const Router = useRouter();

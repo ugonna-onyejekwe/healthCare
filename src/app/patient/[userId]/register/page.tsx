@@ -3,7 +3,7 @@ import { Logo } from "@/components/logo";
 import { getUser } from "@/lib/actions/patient.actions";
 import Image from "next/image";
 
-const Registration = async ({ params }: paramsType) => {
+const Registration = async ({ params }: SearchParamProps) => {
   const { userId } = await params;
   const user = await getUser(userId);
 
